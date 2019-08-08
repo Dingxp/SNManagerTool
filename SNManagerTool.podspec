@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     #库名称
     s.name             = 'SNManagerTool'   
     #版本号
-    s.version          = '1.0.1'
+    s.version          = '1.0.2'
     #库简短介绍,以后search到简介
     s.summary          = 'iOS公共类'
     #开源库描述,定义具体的描述
