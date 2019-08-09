@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SNManagerTool : NSObject
@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  邮箱验证
 
  */
-+ (BOOL) IsEmailAdress:(NSString *)Email;
++ (BOOL)IsEmailAdress:(NSString *)Email;
 
 /**
  身份证验证
@@ -40,10 +40,41 @@ NS_ASSUME_NONNULL_BEGIN
  纯数字验证
 
  */
-- (BOOL)isNum:(NSString *)checkedNumString;
++ (BOOL)isNum:(NSString *)checkedNumString;
 
 
+/**
+ 将日期时间转化为字符串
 
+ */
++ (NSString *)dateTimeForDateFormatter:(NSString *)dateFormatter;
+
+/**
+ 将时间字符串转换为日期
+ 
+ */
++ (NSString *)dateFormatterForDateTime:(NSString *)dateTime andFormatter:(NSString *)format;
+
+/**
+ 计算字符串的宽度
+ 
+ */
++ (float) widthForString:(NSString *)value fontSize:(float)fontSize andHeight:(float)height;
+
+/**
+ 计算字符串的高度
+ 
+ */
++ (CGSize)sizeWithFont:(UIFont *)font maxSize:(CGSize)maxSize string:(NSString *)string;
+
+/**
+ 保存文件
+
+ @param cacheData 二进制文件
+ @param fileName 文件名字
+ @param fileFormat 文件格式
+ */
++ (BOOL)writeToCachePath:(id)cacheData fileName:(NSString*)fileName fileFormat:(NSString *)fileFormat;
 
 @end
 

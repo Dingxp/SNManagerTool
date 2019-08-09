@@ -134,4 +134,12 @@
     return [num doubleValue];
 }
 
+- (NSMutableAttributedString *)addTextCenterLine{
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:self];
+    
+    [attrString addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:NSMakeRange(0, self.length)];
+    [attrString addAttribute:NSStrikethroughColorAttributeName value:[UIColor colorWithRed:168/255.0 green:168/255.0 blue:170/255.0 alpha:1.0] range:NSMakeRange(0, self.length)];
+    
+    return attrString;
+}
 @end

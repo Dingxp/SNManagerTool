@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (CateGory)
@@ -31,6 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)snCalculateIsLessThan:(NSString *)stringNumer;
 //转成小数
 - (double)snCalculateDoubleValue;
+
+/**
+ *  在文本中间添加横划线
+ 
+ */
+- (NSMutableAttributedString *)addTextCenterLine;
 
 @end
 

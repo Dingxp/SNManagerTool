@@ -11,5 +11,5 @@
 #import "UIColor+CateGory.h"
 #import "UIFont+CateGory.h"
 #import "SNColorHeader.h"
-
+#import "SNManagerTool.h"
 #endif /* SNManagerToolHeader_h */

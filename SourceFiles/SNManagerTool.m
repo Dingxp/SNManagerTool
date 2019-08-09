@@ -116,11 +116,81 @@
     return [identityCardPredicate evaluateWithObject:IDCardNumber];
 }
 
-- (BOOL)isNum:(NSString *)checkedNumString {
++ (BOOL)isNum:(NSString *)checkedNumString {
     checkedNumString = [checkedNumString stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
     if(checkedNumString.length > 0) {
         return NO;
     }
     return YES;
 }
+
++ (NSString *)dateTimeForDateFormatter:(NSString *)dateFormatter{
+    //dateFormatter "yyyy-mm-dd HH:mm:ss
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    // 设置日期格式
+    [formatter setDateFormat:dateFormatter];
+    // 获取当前日期
+    NSDate *currentDate = [NSDate date];
+    NSString *currentDateString = [formatter stringFromDate:currentDate];
+    return currentDateString;
+}
+
++ (NSString *)dateFormatterForDateTime:(NSString *)dateTime andFormatter:(NSString *)format{
+    NSTimeInterval interval = [dateTime doubleValue] / 1000.0;
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:format];
+    NSString *dateString = [formatter stringFromDate: date];
+    return dateString;
+}
+
++ (float) widthForString:(NSString *)value fontSize:(float)fontSize andHeight:(float)height{
+    CGSize sizeToFit = [value sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:CGSizeMake(CGFLOAT_MAX, height) lineBreakMode:NSLineBreakByWordWrapping];//此处的换行类型（lineBreakMode）可根据自己的实际情况进行设置
+    return sizeToFit.width;
+}
+
++ (CGSize)sizeWithFont:(UIFont *)font maxSize:(CGSize)maxSize string:(NSString *)string{
+    NSDictionary *attrs = @{NSFontAttributeName:font};
+    return [string boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
+    
+}
+
++ (BOOL)writeToCachePath:(id)cacheData fileName:(NSString*)fileName fileFormat:(NSString *)fileFormat{
+    
+    NSString * documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    fileName = [fileName stringByReplacingOccurrencesOfString:@":" withString:@""];
+    fileName = [fileName stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    fileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString* videoCachePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"fileCache"]];
+    NSFileManager * fm = [NSFileManager defaultManager];
+    
+    BOOL isDir = YES;
+    if (![fm fileExistsAtPath:videoCachePath isDirectory:&isDir]) {
+        
+        [fm createDirectoryAtPath:videoCachePath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    videoCachePath = [NSString stringWithFormat:@"%@/%@.%@",videoCachePath,fileName,fileFormat];
+    BOOL ifSuccess =  [cacheData writeToFile:videoCachePath atomically:YES];
+    
+    return ifSuccess;
+}
+
++ (NSString *)getFileName:(NSString*)fileName fileFormat:(NSString *)fileFormat{
+    NSString * documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    fileName = [fileName stringByReplacingOccurrencesOfString:@":" withString:@""];
+    fileName = [fileName stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    fileName = [fileName stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString* videoCachePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"fileCache"]];
+    NSFileManager * fm = [NSFileManager defaultManager];
+    
+    BOOL isDir = YES;
+    if (![fm fileExistsAtPath:videoCachePath isDirectory:&isDir]) {
+        
+        [fm createDirectoryAtPath:videoCachePath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    videoCachePath = [NSString stringWithFormat:@"%@/%@.%@",videoCachePath,fileName,fileFormat];
+    
+    return videoCachePath;
+}
+
 @end
